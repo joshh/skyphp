@@ -83,7 +83,17 @@ class PageRouter {
 		# reset the found settings for this object
 		$this->cleanSettings();
 
-		$qs = array_filter($qs);
+		// remove falsy folders (but not 0)
+		$qs = array_filter($qs, function($a){
+			if ($a == '0') {
+				return true;
+			}
+			if (!$a) {
+				return false;
+			}
+			return true;
+		});
+
 		$this->qs = $qs;
 		$this->prefix = $prefix;
 
